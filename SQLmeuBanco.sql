@@ -15,11 +15,14 @@ CREATE TABLE "bankAccount" (
 	"closeDate" timestamp
 );
 
+
+CREATE TYPE "transacType" AS ENUM('deposit','withdraw');
+
 CREATE TABLE transactions (
 	id serial NOT NULL PRIMARY KEY,
 	"bankAccountId" integer REFERENCES "bankAccount"(id),
 	amount integer NOT NULL,
-	type text NOT NULL,
+	type "transacType",
 	time timestamp NOT NULL DEFAULT NOW(),
 	description text,
 	cancelled bool
@@ -36,11 +39,13 @@ CREATE TABLE "creditCards" (
 	"limit" integer
 );
 
+CREATE TYPE "phoneType" AS ENUM('landline','mobile');
+
 CREATE TABLE "customerPhones" (
 	id serial NOT NULL PRIMARY KEY,
 	"customerId" integer REFERENCES customers(id),
 	number varchar(11) NOT NULL,
-	type text
+	type "phoneType"
 );
 
 CREATE TABLE states (
